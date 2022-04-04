@@ -2,7 +2,14 @@ package us.careydevelopment.ecosystem.business.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import us.careydevelopment.ecosystem.business.model.Industry;
+import us.careydevelopment.ecosystem.business.repository.IndustryRepository;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 
 @RestController
@@ -10,33 +17,13 @@ public class BusinessController {
 	
     private static final Logger LOG = LoggerFactory.getLogger(BusinessController.class);
 
-//    @GetMapping("/states")
-//    public List<State> fetchAllStates(HttpServletRequest request) {
-//        LOG.debug("Fetching all states");
-//        LOG.debug("Remote IP is " + request.getRemoteAddr());
-//        return stateRepository.findByOrderByNameAsc();
-//    }
-//
-//
-//    @GetMapping("/countries")
-//    public List<Country> fetchAllCountries() {
-//        LOG.debug("Fetching all countries");
-//        return countryRepository.findByOrderByNameAsc();
-//    }
-//
-//    @GetMapping("/zips")
-//    public List<ZipInfo> fetchAllZips() {
-//        LOG.debug("Fetching all U.S. zips");
-//        return zipRepository.findAll();
-//    }
-//
-//    @GetMapping("/timezones")
-//        public List<String> fetchAllTimezones() {
-//        LOG.debug("Fetching all time zones");
-//
-//        List<String> list = new ArrayList<String>(ZoneId.getAvailableZoneIds());
-//        Collections.sort(list);
-//
-//        return list;
-//    }
+    @Autowired
+    private IndustryRepository industryRepository;
+
+    @GetMapping("/industries")
+    public List<Industry> fetchAllIndustries(HttpServletRequest request) {
+        LOG.debug("Fetching all industries");
+        LOG.debug("Remote IP is " + request.getRemoteAddr());
+        return industryRepository.findByOrderByNameAsc();
+    }
 }
