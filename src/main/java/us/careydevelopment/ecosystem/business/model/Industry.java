@@ -10,6 +10,7 @@ public class Industry {
     @Id
     private String id;
 
+    //naics codes come from https://assess.connectiveleadership.com/instruments/lookup_naics.asp?task=lookUp
     private Integer naics;
     private String name;
 
