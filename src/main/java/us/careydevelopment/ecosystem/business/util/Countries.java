@@ -1,5 +1,6 @@
 package us.careydevelopment.ecosystem.business.util;
 
+import org.apache.commons.lang3.StringUtils;
 import us.careydevelopment.ecosystem.business.model.Country;
 import us.careydevelopment.ecosystem.business.model.UsState;
 
@@ -16,5 +17,18 @@ public class Countries {
 
     public static List<Country> get() {
         return COUNTRIES;
+    }
+
+    public static boolean isValid(String country) {
+        boolean valid = false;
+
+        for (Country c : COUNTRIES) {
+            if (c.getTwoLetterCode().equalsIgnoreCase(country.trim())) {
+                valid = true;
+                break;
+            }
+        }
+
+        return valid;
     }
 }

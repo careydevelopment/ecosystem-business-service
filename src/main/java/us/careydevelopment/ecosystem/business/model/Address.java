@@ -1,8 +1,10 @@
 package us.careydevelopment.ecosystem.business.model;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import us.careydevelopment.ecosystem.business.validator.ValidUsState;
-
+import us.careydevelopment.ecosystem.business.util.Countries;
+import us.careydevelopment.ecosystem.business.util.UsStates;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
 
 public class Address {
@@ -22,15 +24,45 @@ public class Address {
     @Size(max = 64, message = "Province name cannot exceed 64 characters")
     private String province;
 
-    @ValidUsState
     private String state;
 
-    //use full country name or whichever country code you want
-    @Size(max = 24, message = "Country name cannot exceed 24 characters")
+    @Size(max = 2, message = "Country code cannot exceed 2 characters")
     private String country;
 
     @Size(max = 16, message = "Postal code cannot exceed 16 characters")
     private String postalCode;
+
+    //bit of a hack, gotta name this method isState() so the proper property
+    //("state") gets returned
+    @AssertTrue(message = "Valid 2-letter U.S. state abbreviation is required")
+    public boolean isState() {
+        if (StringUtils.isBlank(country) || !"US".equals(country)) {
+            return true;
+        }
+
+        if (StringUtils.isBlank(state)) {
+            return true;
+        }
+
+        if (state.length() != 2) {
+            return false;
+        }
+
+        return UsStates.isValid(state);
+    }
+
+    @AssertTrue(message = "Valid 2-letter country code is required")
+    public boolean isCountry() {
+        if (StringUtils.isBlank(country)) {
+            return true;
+        }
+
+        if (country.length() != 2) {
+            return false;
+        }
+
+        return Countries.isValid(country);
+    }
 
     public String getStreet1() {
         return street1;

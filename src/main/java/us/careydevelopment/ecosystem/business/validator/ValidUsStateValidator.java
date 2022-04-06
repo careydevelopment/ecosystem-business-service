@@ -1,12 +1,10 @@
 package us.careydevelopment.ecosystem.business.validator;
 
 import org.apache.commons.lang3.StringUtils;
-import us.careydevelopment.ecosystem.business.model.UsState;
 import us.careydevelopment.ecosystem.business.util.UsStates;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.List;
 
 public class ValidUsStateValidator implements ConstraintValidator<ValidUsState, String> {
 

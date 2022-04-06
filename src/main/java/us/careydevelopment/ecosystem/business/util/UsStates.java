@@ -21,7 +21,7 @@ public class UsStates {
         boolean valid = false;
 
         for (UsState usState : STATES) {
-            if (usState.getTwoLetterCode().equals(state)) {
+            if (usState.getTwoLetterCode().equalsIgnoreCase(state.trim())) {
                 valid = true;
                 break;
             }
