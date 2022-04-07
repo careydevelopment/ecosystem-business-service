@@ -8,4 +8,6 @@ import java.util.List;
 
 public interface BusinessRepository extends MongoRepository<Business, String> {
 
+    Business findByName(String name);
+
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import us.careydevelopment.ecosystem.business.exception.InvalidRequestException;
 import us.careydevelopment.ecosystem.business.model.Business;
 import us.careydevelopment.ecosystem.business.repository.BusinessRepository;
+import us.careydevelopment.ecosystem.business.service.BusinessService;
 import us.careydevelopment.util.api.model.IRestResponse;
 import us.careydevelopment.util.api.model.ValidationError;
 import us.careydevelopment.util.api.response.ResponseEntityUtil;
@@ -28,22 +29,16 @@ public class BusinessController {
     private static final Logger LOG = LoggerFactory.getLogger(BusinessController.class);
 
     @Autowired
-    private BusinessRepository businessRepository;
+    private BusinessService businessService;
 
     @PostMapping("/businesses")
     public ResponseEntity<IRestResponse<Business>> createBusiness(final HttpServletRequest request,
                                                                   @Valid @RequestBody final Business business,
-                                                                  BindingResult bindingResult)
+                                                                  final BindingResult bindingResult)
                                                                     throws InvalidRequestException {
         LOG.debug("Adding business: " + business);
 
-        List<ValidationError> validationErrors = ValidationUtil.convertBindingResultToValidationErrors(bindingResult);
-        LOG.error("Validation errors: " + validationErrors);
-        if (validationErrors.size() > 0) {
-            throw new InvalidRequestException("Validation errors!", validationErrors);
-        }
-
-        final Business returnedBusiness = businessRepository.save(business);
+        final Business returnedBusiness = businessService.save(business, bindingResult);
 
         return ResponseEntityUtil.createSuccessfulResponseEntity("Successfully created!",
                 HttpStatus.CREATED.value(),

@@ -64,6 +64,17 @@ public class Address {
         return Countries.isValid(country);
     }
 
+    @AssertTrue(message = "Street1 cannot be empty if Street2 is populated")
+    public boolean isStreet2() {
+        if (!StringUtils.isBlank(street2)) {
+            if (StringUtils.isBlank(street1)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     public String getStreet1() {
         return street1;
     }
@@ -116,7 +127,7 @@ public class Address {
         return state;
     }
 
-    public void setStage(String state) {
+    public void setState(String state) {
         this.state = state;
     }
     

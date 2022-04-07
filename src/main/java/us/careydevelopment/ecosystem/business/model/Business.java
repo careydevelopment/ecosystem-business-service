@@ -5,6 +5,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -14,7 +15,7 @@ public class Business {
     @Id
     private String id;
 
-    private BusinessType businessType;
+    private BusinessType businessType = BusinessType.BUSINESS;
 
     @Valid
     private Person person;
@@ -34,6 +35,7 @@ public class Business {
     private String notes;
 
     @Size(max = 128, message = "Email address cannot exceed 128 characters")
+    @Email
     private String email;
 
     @Size(max = 24, message = "Phone number cannot exceed 24 characters")
