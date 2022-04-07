@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 @Document(collection = "#{@environment.getProperty('mongo.business.collection')}")
 public class Business {
@@ -55,6 +56,8 @@ public class Business {
 
     @Size(max = 16, message = "Tax ID cannot exceed 16 characters")
     private String taxId;
+
+    private UserLightweight owner;
 
     public Person getPerson() {
         return person;
@@ -168,7 +171,28 @@ public class Business {
         this.id = id;
     }
 
+    public UserLightweight getOwner() {
+        return owner;
+    }
+
+    public void setOwner(UserLightweight owner) {
+        this.owner = owner;
+    }
+
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Business business = (Business) o;
+        return Objects.equals(id, business.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

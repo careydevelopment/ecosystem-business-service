@@ -4,8 +4,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import us.careydevelopment.ecosystem.business.util.Countries;
 import us.careydevelopment.ecosystem.business.util.UsStates;
+
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Size;
+import java.util.Objects;
 
 public class Address {
 
@@ -141,5 +143,18 @@ public class Address {
 
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Address address = (Address) o;
+        return Objects.equals(street1, address.street1) && Objects.equals(city, address.city) && Objects.equals(country, address.country) && Objects.equals(postalCode, address.postalCode);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(street1, city, country, postalCode);
     }
 }
