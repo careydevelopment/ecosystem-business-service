@@ -47,7 +47,7 @@ public class BusinessService {
     public Business update(final Business business, final BindingResult bindingResult) throws InvalidRequestException,
             NotFoundException, NotAuthorizedException {
 
-        validationService.validate(business, bindingResult);
+        validationService.validate(business, bindingResult, false);
 
         final String id = business.getId();
         final Optional<Business> oldBusinessOpt = businessRepository.findById(id);

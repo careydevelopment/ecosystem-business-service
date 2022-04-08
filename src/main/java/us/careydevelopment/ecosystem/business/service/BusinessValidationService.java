@@ -24,16 +24,22 @@ public class BusinessValidationService {
     private BusinessRepository businessRepository;
 
     public void validate(final Business business, final BindingResult bindingResult) throws InvalidRequestException {
+        validate(business, bindingResult, true);
+    }
+
+    public void validate(final Business business, final BindingResult bindingResult, final boolean isNew) throws InvalidRequestException {
         final List<ValidationError> validationErrors = ValidationUtil.convertBindingResultToValidationErrors(bindingResult);
         LOG.error("Validation errors: " + validationErrors);
 
-        customValidation(business, validationErrors);
+        customValidation(business, validationErrors, isNew);
 
         if (validationErrors.size() > 0) throw new InvalidRequestException("Validation errors!", validationErrors);
     }
 
-    private void customValidation(final Business business, List<ValidationError> validationErrors) {
-        validateUniqueName(business, validationErrors);
+    private void customValidation(final Business business, List<ValidationError> validationErrors, final boolean isNew) {
+        if (isNew) {
+            validateUniqueName(business, validationErrors);
+        }
     }
 
     @VisibleForTesting

@@ -55,7 +55,7 @@ public class BusinessController {
 
         final Business returnedBusiness = businessService.update(business, bindingResult);
 
-        return ResponseEntityUtil.createSuccessfulResponseEntity("Successfully created!",
+        return ResponseEntityUtil.createSuccessfulResponseEntity("Successfully updated!",
                 HttpStatus.OK.value(),
                 returnedBusiness);
     }
